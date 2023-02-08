@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework.Logging.Console",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework.Logging.Elastic", "Framework.Logging.Elastic\Framework.Logging.Elastic.csproj", "{7E8E91E9-3582-4564-9560-22E7AC24E7E4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework.Logging.File", "Framework.Logging.File\Framework.Logging.File.csproj", "{1EA88EAE-E9E3-4D5E-8330-74B9F7EF1E84}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,10 @@ Global
 		{7E8E91E9-3582-4564-9560-22E7AC24E7E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E8E91E9-3582-4564-9560-22E7AC24E7E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E8E91E9-3582-4564-9560-22E7AC24E7E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EA88EAE-E9E3-4D5E-8330-74B9F7EF1E84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EA88EAE-E9E3-4D5E-8330-74B9F7EF1E84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EA88EAE-E9E3-4D5E-8330-74B9F7EF1E84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EA88EAE-E9E3-4D5E-8330-74B9F7EF1E84}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
