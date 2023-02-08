@@ -7,4 +7,11 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Framework.Logging.Console\Framework.Logging.Console.csproj" />
+    <ProjectReference Include="..\Framework.Logging.Elastic\Framework.Logging.Elastic.csproj" />
+    <ProjectReference Include="..\Framework.Logging.File\Framework.Logging.File.csproj" />
+    <ProjectReference Include="..\Framework.Logging\Framework.Logging.csproj" />
+  </ItemGroup>
+
 </Project>
