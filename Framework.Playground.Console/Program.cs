@@ -13,7 +13,7 @@ var logBuilder = new LogBuilder()
     .CreateLogger();
 
 logBuilder.Info("Logger Test", "1", "2", "3");
-var logs = logBuilder.Read(DateTime.Now.Date);
+var logs = logBuilder.Read(DateTime.Now);
 
 foreach (var log in logs)
 {

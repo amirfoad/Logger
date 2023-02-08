@@ -19,13 +19,17 @@ namespace Framework.Logging.Elastic
 
         public string Name { get; private set; }
 
+        #region Read
+
         public IList<Log<T>> Read<T>(DateTime date) where T : class
         {
             var result = _elasticClient.Search<Log<T>>(s =>
-            s.Index(nameof(Log).ToLower())
-                .Query(q =>
-                    q.Term(t =>
-                    t.LogDate.Date, date.Date)));
+              s.Index(nameof(Log).ToLower())
+              .Query(q => q
+              .DateRange(b => b
+                      .Field(field => field.LogDate)
+                      .GreaterThanOrEquals(GenerateStartDate(date))
+                      .LessThanOrEquals(GenerateEndDate(date)))));
 
             if (!result.IsValid)
                 throw new Exception(result.OriginalException.Message);
@@ -36,12 +40,13 @@ namespace Framework.Logging.Elastic
         public IList<Log<T>> Read<T>(DateTime date, string level) where T : class
         {
             var result = _elasticClient.Search<Log<T>>(s =>
-                s.Index(nameof(Log).ToLower())
-                .Query(q => q
-                    .Bool(b => b
-                       .Must(m =>
-                       m.Term(t => t.LogDate.Date, date.Date),
-                       m => m.Term(t => t.Level, level)))));
+                     s.Index(nameof(Log).ToLower())
+                     .Query(q => q
+                         .DateRange(b => b
+                         .Field(field => field.LogDate)
+                         .GreaterThanOrEquals(GenerateStartDate(date))
+                         .LessThanOrEquals(GenerateEndDate(date))))
+                      .Query(q => q.Match(m => m.Field(f => f.Level).Query(level))));
 
             if (!result.IsValid)
                 throw new Exception(result.OriginalException.Message);
@@ -52,12 +57,13 @@ namespace Framework.Logging.Elastic
         public IList<Log<T>> Read<T>(string category, DateTime date) where T : class
         {
             var result = _elasticClient.Search<Log<T>>(s =>
-            s.Index(nameof(Log).ToLower())
-            .Query(q => q
-                .Bool(b => b
-                   .Must(m =>
-                   m.Term(t => t.LogDate.Date, date.Date),
-                   m => m.Term(t => t.Category, category)))));
+                      s.Index(nameof(Log).ToLower())
+                      .Query(q => q
+                          .DateRange(b => b
+                          .Field(field => field.LogDate)
+                          .GreaterThanOrEquals(GenerateStartDate(date))
+                          .LessThanOrEquals(GenerateEndDate(date))))
+                       .Query(q => q.Match(m => m.Field(f => f.Category).Query(category))));
             if (!result.IsValid)
                 throw new Exception(result.OriginalException.Message);
 
@@ -71,8 +77,8 @@ namespace Framework.Logging.Elastic
             .Query(q => q
                 .DateRange(b => b
                         .Field(field => field.LogDate)
-                        .GreaterThanOrEquals(fromDate)
-                        .LessThanOrEquals(toDate))));
+                        .GreaterThanOrEquals(GenerateStartDate(fromDate))
+                        .LessThanOrEquals(GenerateEndDate(toDate)))));
 
             if (!result.IsValid)
                 throw new Exception(result.OriginalException.Message);
@@ -87,8 +93,8 @@ namespace Framework.Logging.Elastic
             .Query(q => q
                 .DateRange(b => b
                 .Field(field => field.LogDate)
-                .GreaterThanOrEquals(fromDate)
-                .LessThanOrEquals(toDate)))
+                .GreaterThanOrEquals(GenerateStartDate(fromDate))
+                .LessThanOrEquals(GenerateEndDate(toDate))))
              .Query(q => q.Match(m => m.Field(f => f.Level).Query(level))));
 
             if (!result.IsValid)
@@ -96,6 +102,10 @@ namespace Framework.Logging.Elastic
 
             return result.Documents.ToList();
         }
+
+        #endregion Read
+
+        #region Write
 
         public void Write<T>(ILog<T> log) where T : class
         {
@@ -108,5 +118,21 @@ namespace Framework.Logging.Elastic
                     throw new Exception(result.ServerError.Status.ToString());
             }
         }
+
+        #endregion Write
+
+        #region Private Methods
+
+        private DateTime GenerateStartDate(DateTime date)
+        {
+            return new DateTime(date.Year, date.Month, date.Day, 0, 0, 0);
+        }
+
+        private DateTime GenerateEndDate(DateTime date)
+        {
+            return new DateTime(date.Year, date.Month, date.Day, 23, 59, 59);
+        }
+
+        #endregion Private Methods
     }
 }
