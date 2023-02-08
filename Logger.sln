@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework.Core", "Framework
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework.Logging", "Framework.Logging\Framework.Logging.csproj", "{AE4ED13F-3D2C-4E37-B35F-2037136398F4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework.Logging.Console", "Framework.Logging.Console\Framework.Logging.Console.csproj", "{AB0A96AD-7115-4466-A6F1-5155DCB4295C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{AE4ED13F-3D2C-4E37-B35F-2037136398F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE4ED13F-3D2C-4E37-B35F-2037136398F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AE4ED13F-3D2C-4E37-B35F-2037136398F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB0A96AD-7115-4466-A6F1-5155DCB4295C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB0A96AD-7115-4466-A6F1-5155DCB4295C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB0A96AD-7115-4466-A6F1-5155DCB4295C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB0A96AD-7115-4466-A6F1-5155DCB4295C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
