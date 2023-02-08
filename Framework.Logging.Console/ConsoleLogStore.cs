@@ -1,4 +1,6 @@
-﻿namespace Framework.Logging.Console
+﻿using Framework.Logging.Common;
+
+namespace Framework.Logging.Console
 {
     public class ConsoleLogStore : ILogStore
     {
