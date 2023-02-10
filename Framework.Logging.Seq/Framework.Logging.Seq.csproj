@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Framework.Logging\Framework.Logging.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Seq.Api" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Seq.Api" Version="2023.1.0" />
+  </ItemGroup>
+</Project>
