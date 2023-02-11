@@ -6,7 +6,7 @@ namespace Framework.Logging.Seq.Extensions
         private static readonly string _storeName = $"{nameof(SeqLogStore)}-{Guid.NewGuid():N}";
 
 
-        public static LogBuilder ElasticSearch(this LogStoreConfig config, string connection)
+        public static LogBuilder Seq(this LogStoreConfig config, string connection)
 
         {
             var elasticConfig = new SeqLogConfig()

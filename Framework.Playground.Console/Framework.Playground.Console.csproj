@@ -12,6 +12,7 @@
     <ProjectReference Include="..\Framework.Logging.Elastic\Framework.Logging.Elastic.csproj" />
     <ProjectReference Include="..\Framework.Logging.File\Framework.Logging.File.csproj" />
     <ProjectReference Include="..\Framework.Logging\Framework.Logging.csproj" />
+    <ProjectReference Include="..\Framework.Logging.Seq\Framework.Logging.Seq.csproj" />
   </ItemGroup>
 
   <ItemGroup>

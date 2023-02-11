@@ -1,4 +1,5 @@
 ﻿using System;
+using Seq.Api;
 using Seq.Api.Client;
 
 namespace Framework.Logging.Seq
@@ -6,6 +7,7 @@ namespace Framework.Logging.Seq
     public class SeqLogStore : ILogStore
     {
         private readonly SeqApiClient _seqClient;
+        private readonly SeqConnection _seqConnection;
         private readonly SeqLogConfig _seqConfig;
         private readonly LoggerContext _context;
         public SeqLogStore(string name,LoggerContext context)
@@ -14,6 +16,7 @@ namespace Framework.Logging.Seq
             _context = context;
             _seqConfig = (SeqLogConfig)context.LogConfigurations[name];
             _seqClient = new SeqApiClient(_seqConfig.ConnectionString);
+            _seqConnection = new SeqConnection(_seqConfig.ConnectionString);
         }
         public string Name { get; private set; }
 
@@ -44,6 +47,9 @@ namespace Framework.Logging.Seq
 
         public void Write<T>(ILog<T> log) where T : class
         {
+            var signal = _seqConnection.Signals.TemplateAsync().Result;
+            signal.Title = "Log";
+            var result = _seqConnection.Signals.AddAsync(signal);
             throw new NotImplementedException();
         }
     }
