@@ -2,7 +2,7 @@
 using Framework.Logging.Console.Extensions;
 using Framework.Logging.Elastic.Extensions;
 using Framework.Logging.Files.Extensions;
-
+using Serilog;
 var logBuilder = new LogBuilder()
     .MinimumLevel.Debug()
     .DeleteBefore.Week(2)

@@ -11,8 +11,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Seq.Api" />
+    <None Remove="Extensions\" />
+    <None Remove="Helpers\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Seq.Api" Version="2023.1.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Extensions\" />
+    <Folder Include="Helpers\" />
   </ItemGroup>
 </Project>
