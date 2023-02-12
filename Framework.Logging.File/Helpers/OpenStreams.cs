@@ -74,14 +74,17 @@ namespace Framework.Logging.Files.Helpers
                 .Where(p => p.CreationTime >= fromDate && p.CreationTime <= toDate).ToArray();
             foreach (FileInfo file in files)
             {
-                if (_streams.ContainsKey(file.CreationTime))
+                if (_streams.ContainsKey(file.CreationTime.Date))
                 {
                     CloseStream(file.CreationTime.Date);
                     hasKey = true;
                 }
                 lock (_lock)
                 {
-                    result = File.ReadAllText(file.FullName, Encoding.UTF8);
+                    if (File.Exists(CalculateFilePath(file.CreationTime).FullPath))
+                    {
+                        result += File.ReadAllText(CalculateFilePath(file.CreationTime).FullPath, Encoding.UTF8);
+                    }
                 }
                 if (hasKey)
                 {
