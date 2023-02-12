@@ -1,5 +1,6 @@
 ﻿using Framework.Logging.Common;
 using System.Text;
+using System.Text.Json;
 
 namespace Framework.Logging.Seq
 {
@@ -22,27 +23,87 @@ namespace Framework.Logging.Seq
 
         public IList<Log<T>> Read<T>(DateTime date) where T : class
         {
-            return new List<Log<T>>();
+            // Add the Seq API key to the request headers
+            Client.DefaultRequestHeaders.Add("X-Seq-ApiKey", _seqLogConfig.ApiKey);
+
+            // Send an HTTP GET request to the /api/events endpoint with a filter for Error level events
+            var response = Client.GetAsync($"{_seqLogConfig.ConnectionString.NormalizeServerBaseAddress()}api/events?filter=LogDate%3D'{date}'").Result;
+
+            // Throw an exception if the response is not successful
+            response.EnsureSuccessStatusCode();
+
+            // Deserialize the response body to a list of event objects
+            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            var events = JsonSerializer.Deserialize<List<Log<T>>>(response.Content.ReadAsStream(), options);
+            return events;
         }
 
         public IList<Log<T>> Read<T>(DateTime date, string level) where T : class
         {
-            return new List<Log<T>>();
+            // Add the Seq API key to the request headers
+            Client.DefaultRequestHeaders.Add("X-Seq-ApiKey", _seqLogConfig.ApiKey);
+
+            // Send an HTTP GET request to the /api/events endpoint with a filter for Error level events
+            var response = Client.GetAsync($"{_seqLogConfig.ConnectionString.NormalizeServerBaseAddress()}api/events?filter=LogDate%3D'{date}'%20and%20Level%20%3D%20'{level}'%20").Result;
+
+            // Throw an exception if the response is not successful
+            response.EnsureSuccessStatusCode();
+
+            // Deserialize the response body to a list of event objects
+            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            var events = JsonSerializer.Deserialize<List<Log<T>>>(response.Content.ReadAsStream(), options);
+            return events;
         }
 
         public IList<Log<T>> Read<T>(string category, DateTime date) where T : class
         {
-            return new List<Log<T>>();
+            // Add the Seq API key to the request headers
+            Client.DefaultRequestHeaders.Add("X-Seq-ApiKey", _seqLogConfig.ApiKey);
+
+            // Send an HTTP GET request to the /api/events endpoint with a filter for Error level events
+            var response = Client.GetAsync($"{_seqLogConfig.ConnectionString.NormalizeServerBaseAddress()}api/events?filter=LogDate%3D'{date}'%20and%20Category%20%3D%20'{category}'%20").Result;
+
+            // Throw an exception if the response is not successful
+            response.EnsureSuccessStatusCode();
+
+            // Deserialize the response body to a list of event objects
+            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            var events = JsonSerializer.Deserialize<List<Log<T>>>(response.Content.ReadAsStream(), options);
+            return events;
         }
 
         public IList<Log<T>> Read<T>(DateTime fromDate, DateTime toDate) where T : class
         {
-            return new List<Log<T>>();
+            // Add the Seq API key to the request headers
+            Client.DefaultRequestHeaders.Add("X-Seq-ApiKey", _seqLogConfig.ApiKey);
+
+            // Send an HTTP GET request to the /api/events endpoint with a filter for Error level events
+            var response = Client.GetAsync($"{_seqLogConfig.ConnectionString.NormalizeServerBaseAddress()}api/events?filter=LogDate%20>%3D'{fromDate}'%20and%20LogDate%20<%3D%20'{toDate}'").Result;
+
+            // Throw an exception if the response is not successful
+            response.EnsureSuccessStatusCode();
+
+            // Deserialize the response body to a list of event objects
+            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            var events = JsonSerializer.Deserialize<List<Log<T>>>(response.Content.ReadAsStream(), options);
+            return events;
         }
 
         public IList<Log<T>> Read<T>(DateTime fromDate, DateTime toDate, string level) where T : class
         {
-            return new List<Log<T>>();
+            // Add the Seq API key to the request headers
+            Client.DefaultRequestHeaders.Add("X-Seq-ApiKey", _seqLogConfig.ApiKey);
+
+            // Send an HTTP GET request to the /api/events endpoint with a filter for Error level events
+            var response = Client.GetAsync($"{_seqLogConfig.ConnectionString.NormalizeServerBaseAddress()}api/events?filter=LogDate%20>%3D'{fromDate}'%20and%20LogDate%20<%3D%20'{toDate}'%20and%20Level%20%3D%20'{level}'").Result;
+
+            // Throw an exception if the response is not successful
+            response.EnsureSuccessStatusCode();
+
+            // Deserialize the response body to a list of event objects
+            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            var events = JsonSerializer.Deserialize<List<Log<T>>>(response.Content.ReadAsStream(), options);
+            return events;
         }
 
         public void Write<T>(ILog<T> log) where T : class
