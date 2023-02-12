@@ -1,57 +1,78 @@
-﻿using System;
-using Seq.Api;
-using Seq.Api.Client;
+﻿using Framework.Logging.Common;
+using System.Text;
 
 namespace Framework.Logging.Seq
 {
     public class SeqLogStore : ILogStore
     {
-        private readonly SeqApiClient _seqClient;
-        private readonly SeqConnection _seqConnection;
-        private readonly SeqLogConfig _seqConfig;
         private readonly LoggerContext _context;
-        public SeqLogStore(string name,LoggerContext context)
+        private readonly SeqLogConfig _seqLogConfig;
+        private readonly int _messageNumber;
+        private readonly HttpClient Client = new HttpClient();
+
+        public SeqLogStore(string name, LoggerContext context)
         {
             Name = name;
+            _messageNumber = 0;
             _context = context;
-            _seqConfig = (SeqLogConfig)context.LogConfigurations[name];
-            _seqClient = new SeqApiClient(_seqConfig.ConnectionString);
-            _seqConnection = new SeqConnection(_seqConfig.ConnectionString);
+            _seqLogConfig = (SeqLogConfig)context.LogConfigurations[name];
         }
+
         public string Name { get; private set; }
 
         public IList<Log<T>> Read<T>(DateTime date) where T : class
         {
-            throw new NotImplementedException();
+            return new List<Log<T>>();
         }
 
         public IList<Log<T>> Read<T>(DateTime date, string level) where T : class
         {
-            throw new NotImplementedException();
+            return new List<Log<T>>();
         }
 
         public IList<Log<T>> Read<T>(string category, DateTime date) where T : class
         {
-            throw new NotImplementedException();
+            return new List<Log<T>>();
         }
 
         public IList<Log<T>> Read<T>(DateTime fromDate, DateTime toDate) where T : class
         {
-            throw new NotImplementedException();
+            return new List<Log<T>>();
         }
 
         public IList<Log<T>> Read<T>(DateTime fromDate, DateTime toDate, string level) where T : class
         {
-            throw new NotImplementedException();
+            return new List<Log<T>>();
         }
 
         public void Write<T>(ILog<T> log) where T : class
         {
-            var signal = _seqConnection.Signals.TemplateAsync().Result;
-            signal.Title = "Log";
-            var result = _seqConnection.Signals.AddAsync(signal);
-            throw new NotImplementedException();
+            if (log.Level.IsLevelEnabled(_context.MinimumLevel, _seqLogConfig.Level))
+            {
+                try
+                {
+                    string msg = log.GenerateLogMessage(_messageNumber, log.Level);
+                    StringContent i = new StringContent(msg, Encoding.UTF8, "application/json");
+                    string u = _seqLogConfig.ConnectionString.NormalizeServerBaseAddress() + "api/events/raw?clef";
+                    if (!string.IsNullOrEmpty(_seqLogConfig.ApiKey))
+                    {
+                        u = _seqLogConfig.ConnectionString.NormalizeServerBaseAddress() + "api/events/raw?clef&apikey=" + _seqLogConfig.ApiKey;
+                    }
+
+                    HttpResponseMessage result = Client.PostAsync(u, i).Result;
+                    string resultMessage = result.Content.ReadAsStringAsync().Result;
+                    if (!result.IsSuccessStatusCode)
+                    {
+                        Console.WriteLine(resultMessage);
+                        Console.WriteLine(result);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Exception e = ex;
+                    Console.WriteLine(e);
+                }
+            }
         }
     }
 }
-

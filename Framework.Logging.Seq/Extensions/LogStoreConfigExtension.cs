@@ -1,21 +1,21 @@
-﻿using System;
-namespace Framework.Logging.Seq.Extensions
+﻿namespace Framework.Logging.Seq.Extensions
 {
-	public static class LogStoreConfigExtension
-	{
+    public static class LogStoreConfigExtension
+    {
         private static readonly string _storeName = $"{nameof(SeqLogStore)}-{Guid.NewGuid():N}";
 
-
-        public static LogBuilder Seq(this LogStoreConfig config, string connection)
-
+        public static LogBuilder Seq(this LogStoreConfig config, string connection, string apiKey = "", LogLevel level = LogLevel.Info)
         {
-            var elasticConfig = new SeqLogConfig()
+            var fileLogConfig = new SeqLogConfig()
             {
-                ConnectionString = connection,
+                ApiKey = apiKey,
+                ConnectionString = connection
             };
-            config.LoggerContext.LogConfigurations.Add(_storeName, elasticConfig);
-            return config.Store(new SeqLogStore(_storeName,config.LoggerContext));
+
+            var context = config.LoggerContext;
+            context.LogConfigurations.Add(_storeName, fileLogConfig);
+
+            return config.Store(new SeqLogStore(_storeName, config.LoggerContext));
         }
     }
 }
-
