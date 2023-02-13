@@ -8,7 +8,8 @@ var logBuilder = new LogBuilder()
     .MinimumLevel.Debug()
     .DeleteBefore.Week(2)
     .DateTime.Set(false)
-    .WriteTo.Seq("http://localhost:5341/")
+    //.WriteTo.Seq("http://localhost:5341/")
+    .WriteTo.File()
     .CreateLogger();
 
 logBuilder.Info("Logger Test", "1", "2", "3");

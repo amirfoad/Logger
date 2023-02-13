@@ -31,7 +31,7 @@ namespace Framework.Logging
             var logs = new List<Log<T>>();
             foreach (var log in _logStores.Values)
             {
-                logs.AddRange(log.Read<T>(fromDate, toDate));
+                logs.AddRange(log.Read<T>(fromDate, toDate,"Debug"));
             }
             return logs;
         }
@@ -82,6 +82,106 @@ namespace Framework.Logging
             foreach (var log in _logStores.Values)
             {
                 logs.AddRange(log.Read<T>(fromDate, toDate, level.LevelDescriptor()));
+            }
+            return logs;
+        }
+
+        public IList<Log<T>> Info(DateTime date)
+        {
+            var logs = new List<Log<T>>();
+            foreach (var log in _logStores.Values)
+            {
+                logs.AddRange(log.Read<T>(date, "Info"));
+            }
+            return logs;
+        }
+
+        public IList<Log<T>> Warning(DateTime date)
+        {
+            var logs = new List<Log<T>>();
+            foreach (var log in _logStores.Values)
+            {
+                logs.AddRange(log.Read<T>(date, "Warning"));
+            }
+            return logs;
+        }
+
+        public IList<Log<T>> Trace(DateTime date)
+        {
+            var logs = new List<Log<T>>();
+            foreach (var log in _logStores.Values)
+            {
+                logs.AddRange(log.Read<T>(date, "Trace"));
+            }
+            return logs;
+        }
+
+        public IList<Log<T>> Error(DateTime date)
+        {
+            var logs = new List<Log<T>>();
+            foreach (var log in _logStores.Values)
+            {
+                logs.AddRange(log.Read<T>(date, "Error"));
+            }
+            return logs;
+        }
+
+        public IList<Log<T>> Fatal(DateTime date)
+        {
+            var logs = new List<Log<T>>();
+            foreach (var log in _logStores.Values)
+            {
+                logs.AddRange(log.Read<T>(date, "Fatal"));
+            }
+            return logs;
+        }
+
+        public IList<Log<T>> Info(DateTime fromDate, DateTime toDate)
+        {
+            var logs = new List<Log<T>>();
+            foreach (var log in _logStores.Values)
+            {
+                logs.AddRange(log.Read<T>(fromDate, toDate,"Info"));
+            }
+            return logs;
+        }
+
+        public IList<Log<T>> Warning(DateTime fromDate, DateTime toDate)
+        {
+            var logs = new List<Log<T>>();
+            foreach (var log in _logStores.Values)
+            {
+                logs.AddRange(log.Read<T>(fromDate, toDate, "Warning"));
+            }
+            return logs;
+        }
+
+        public IList<Log<T>> Trace(DateTime fromDate, DateTime toDate)
+        {
+            var logs = new List<Log<T>>();
+            foreach (var log in _logStores.Values)
+            {
+                logs.AddRange(log.Read<T>(fromDate, toDate, "Trace"));
+            }
+            return logs;
+        }
+
+        public IList<Log<T>> Error(DateTime fromDate, DateTime toDate)
+        {
+            var logs = new List<Log<T>>();
+            foreach (var log in _logStores.Values)
+            {
+                logs.AddRange(log.Read<T>(fromDate, toDate, "Error"));
+            }
+            return logs;
+        }
+
+        public IList<Log<T>> Fatal(DateTime fromDate, DateTime toDate)
+        {
+            var logs = new List<Log<T>>();
+            foreach (var log in _logStores.Values)
+            {
+                logs.AddRange(log.Read<T>(fromDate, toDate, "Fatal"));
             }
             return logs;
         }
@@ -142,6 +242,7 @@ namespace Framework.Logging
         public void Trace(T message, string traceId, string sectionId, string serviceId, string category = "") => Log(nameof(LogLevel.Trace), message, traceId, sectionId, serviceId, category);
 
         public void Warning(T message, string traceId, string sectionId, string serviceId, string category = "") => Log(nameof(LogLevel.Warning), message, traceId, sectionId, serviceId, category);
+
 
         #endregion Write
     }
