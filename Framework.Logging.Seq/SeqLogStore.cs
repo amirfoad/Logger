@@ -25,31 +25,31 @@ namespace Framework.Logging.Seq
 
         public IList<Log<T>> Read<T>(DateTime date) where T : class
         {
-            var query = "LogDate%3D'{date}'";
+            var query = $"LogDate%3D'{date}'";
             return ReadFromSeq<T>(query);
         }
 
         public IList<Log<T>> Read<T>(DateTime date, string level) where T : class
         {
-            var query = "LogDate%3D'{date}'%20and%20Level%20%3D%20'{level}'%20";
+            var query = $"LogDate%3D'{date}'%20and%20Level%20%3D%20'{level}'%20";
             return ReadFromSeq<T>(query);
         }
 
         public IList<Log<T>> Read<T>(string category, DateTime date) where T : class
         {
-            var query = "LogDate%3D'{date}'%20and%20Category%20%3D%20'{category}'%20";
+            var query = $"LogDate%3D'{date}'%20and%20Category%20%3D%20'{category}'%20";
             return ReadFromSeq<T>(query);
         }
 
         public IList<Log<T>> Read<T>(DateTime fromDate, DateTime toDate) where T : class
         {
-            var query = "LogDate%20>%3D'{fromDate}'%20and%20LogDate%20<%3D%20'{toDate}'";
+            var query = $"LogDate%20>%3D'{fromDate}'%20and%20LogDate%20<%3D%20'{toDate}'";
             return ReadFromSeq<T>(query);
         }
 
         public IList<Log<T>> Read<T>(DateTime fromDate, DateTime toDate, string level) where T : class
         {
-            var query = "LogDate%20>%3D'{fromDate}'%20and%20LogDate%20<%3D%20'{toDate}'%20and%20Level%20%3D%20'{level}'";
+            var query = $"LogDate%20>%3D'{fromDate}'%20and%20LogDate%20<%3D%20'{toDate}'%20and%20Level%20%3D%20'{level}'";
             return ReadFromSeq<T>(query);
         }
 
