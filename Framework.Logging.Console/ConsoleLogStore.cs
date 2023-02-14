@@ -19,27 +19,27 @@ namespace Framework.Logging.Console
 
         #region Read
 
-        public IList<Log<T>> Read<T>(DateTime date) where T : class
+        public async Task<IList<Log<T>>> Read<T>(DateTime date) where T : class
         {
             return new List<Log<T>>();
         }
 
-        public IList<Log<T>> Read<T>(DateTime date, string level) where T : class
+        public async Task<IList<Log<T>>> Read<T>(DateTime date, string level) where T : class
         {
             return new List<Log<T>>();
         }
 
-        public IList<Log<T>> Read<T>(string category, DateTime date) where T : class
+        public async Task<IList<Log<T>>> Read<T>(string category, DateTime date) where T : class
         {
             return new List<Log<T>>();
         }
 
-        public IList<Log<T>> Read<T>(DateTime fromDate, DateTime toDate) where T : class
+        public async Task<IList<Log<T>>> Read<T>(DateTime fromDate, DateTime toDate) where T : class
         {
             return new List<Log<T>>();
         }
 
-        public IList<Log<T>> Read<T>(DateTime fromDate, DateTime toDate, string level) where T : class
+        public async Task<IList<Log<T>>> Read<T>(DateTime fromDate, DateTime toDate, string level) where T : class
         {
             return new List<Log<T>>();
         }
@@ -48,7 +48,7 @@ namespace Framework.Logging.Console
 
         #region Write
 
-        public void Write<T>(ILog<T> log) where T : class
+        public Task Write<T>(ILog<T> log) where T : class
         {
             if (log.Level.IsLevelEnabled(_context.MinimumLevel, _consoleConfig.Level))
             {
@@ -66,6 +66,8 @@ namespace Framework.Logging.Console
                 System.Console.WriteLine(log.ToString());
                 System.Console.ResetColor();
             }
+
+            return Task.CompletedTask;
         }
 
         #endregion Write

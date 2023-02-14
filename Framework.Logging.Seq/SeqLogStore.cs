@@ -1,4 +1,5 @@
 ﻿using Framework.Logging.Common;
+using Newtonsoft.Json;
 using System.Text;
 using System.Text.Json;
 
@@ -23,47 +24,47 @@ namespace Framework.Logging.Seq
 
         #region Read
 
-        public IList<Log<T>> Read<T>(DateTime date) where T : class
+        public Task<IList<Log<T>>> Read<T>(DateTime date) where T : class
         {
-            var query = $"LogDate%3D'{date}'";
+            var query = $"LogDate%20>%3D'{date:yyyy-MM-dd}'%20and%20LogDate%20<%20'{date.AddDays(1):yyyy-MM-dd}'";
             return ReadFromSeq<T>(query);
         }
 
-        public IList<Log<T>> Read<T>(DateTime date, string level) where T : class
+        public async Task<IList<Log<T>>> Read<T>(DateTime date, string level) where T : class
         {
-            var query = $"LogDate%3D'{date}'%20and%20Level%20%3D%20'{level}'%20";
-            return ReadFromSeq<T>(query);
+            var query = $"LogDate%20>%3D'{date:yyyy-MM-dd}'%20and%20LogDate%20<%3D%20'{date.AddDays(1):yyyy-MM-dd}'%20and%20Level%20%3D%20'{level}'";
+            return await ReadFromSeq<T>(query);
         }
 
-        public IList<Log<T>> Read<T>(string category, DateTime date) where T : class
+        public async Task<IList<Log<T>>> Read<T>(string category, DateTime date) where T : class
         {
-            var query = $"LogDate%3D'{date}'%20and%20Category%20%3D%20'{category}'%20";
-            return ReadFromSeq<T>(query);
+            var query = $"LogDate%20>%3D'{date:yyyy-MM-dd}'%20and%20LogDate%20<%20'{date.AddDays(1)}'%20and%20Category%20%3D%20'{category}'";
+            return await ReadFromSeq<T>(query);
         }
 
-        public IList<Log<T>> Read<T>(DateTime fromDate, DateTime toDate) where T : class
+        public async Task<IList<Log<T>>> Read<T>(DateTime fromDate, DateTime toDate) where T : class
         {
-            var query = $"LogDate%20>%3D'{fromDate}'%20and%20LogDate%20<%3D%20'{toDate}'";
-            return ReadFromSeq<T>(query);
+            var query = $"LogDate%20>%3D'{fromDate:yyyy-MM-dd}'%20and%20LogDate%20<%3D%20'{toDate:yyyy-MM-dd}'";
+            return await ReadFromSeq<T>(query);
         }
 
-        public IList<Log<T>> Read<T>(DateTime fromDate, DateTime toDate, string level) where T : class
+        public async Task<IList<Log<T>>> Read<T>(DateTime fromDate, DateTime toDate, string level) where T : class
         {
-            var query = $"LogDate%20>%3D'{fromDate}'%20and%20LogDate%20<%3D%20'{toDate}'%20and%20Level%20%3D%20'{level}'";
-            return ReadFromSeq<T>(query);
+            var query = $"LogDate%20>%3D'{fromDate:yyyy-MM-dd}'%20and%20LogDate%20<%3D%20'{toDate:yyyy-MM-dd}'%20and%20Level%20%3D%20'{level}'";
+            return await ReadFromSeq<T>(query);
         }
 
         #endregion Read
 
         #region Write
 
-        public void Write<T>(ILog<T> log) where T : class
+        public async Task Write<T>(ILog<T> log) where T : class
         {
             if (log.Level.IsLevelEnabled(_context.MinimumLevel, _seqLogConfig.Level))
             {
                 try
                 {
-                    string msg = log.GenerateLogMessage(_messageNumber, log.Level);
+                    string msg = log.GenerateLogMessage(_messageNumber, log.Level.ToUpper());
                     StringContent i = new StringContent(msg, Encoding.UTF8, "application/json");
                     string u = _seqLogConfig.ConnectionString.NormalizeServerBaseAddress() + "api/events/raw?clef";
                     if (!string.IsNullOrEmpty(_seqLogConfig.ApiKey))
@@ -71,8 +72,8 @@ namespace Framework.Logging.Seq
                         u = _seqLogConfig.ConnectionString.NormalizeServerBaseAddress() + "api/events/raw?clef&apikey=" + _seqLogConfig.ApiKey;
                     }
 
-                    HttpResponseMessage result = Client.PostAsync(u, i).Result;
-                    string resultMessage = result.Content.ReadAsStringAsync().Result;
+                    HttpResponseMessage result = await Client.PostAsync(u, i);
+                    string resultMessage = await result.Content.ReadAsStringAsync();
                     if (!result.IsSuccessStatusCode)
                     {
                         Console.WriteLine(resultMessage);
@@ -91,21 +92,63 @@ namespace Framework.Logging.Seq
 
         #region Private Methods
 
-        private IList<Log<T>> ReadFromSeq<T>(string query) where T : class
+        private async Task<IList<Log<T>>> ReadFromSeq<T>(string query) where T : class
         {
             // Add the Seq API key to the request headers
             Client.DefaultRequestHeaders.Add("X-Seq-ApiKey", _seqLogConfig.ApiKey);
 
             // Send an HTTP GET request to the /api/events endpoint with a filter for Error level events
-            var response = Client.GetAsync($"{_seqLogConfig.ConnectionString.NormalizeServerBaseAddress()}api/events?filter={query}").Result;
+            var response = await Client.GetAsync($"{_seqLogConfig.ConnectionString.NormalizeServerBaseAddress()}api/events?filter={query}");
 
             // Throw an exception if the response is not successful
             response.EnsureSuccessStatusCode();
+            var stringResposne = response.Content.ReadAsStringAsync().Result;
+            var responseAsStream = await response.Content.ReadAsStreamAsync();
+            var properties = await System.Text.Json.JsonSerializer.DeserializeAsync<List<Event>>(responseAsStream);
 
-            // Deserialize the response body to a list of event objects
-            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-            var events = JsonSerializer.Deserialize<List<Log<T>>>(response.Content.ReadAsStream(), options);
-            return events;
+            var result = ConvertEventsToLogs<T>(properties);
+            return result;
+        }
+
+        private class Event
+        {
+            [JsonProperty("MessageTemplateTokens")]
+            public List<MessageTemplateTokens> MessageTemplateTokens { get; set; }
+
+            [JsonProperty("Properties")]
+            public List<Properties> Properties { get; set; }
+        }
+
+        private class Properties
+        {
+            public string Name { get; set; }
+            public string Value { get; set; }
+        }
+
+        private class MessageTemplateTokens
+        {
+            public string Text { get; set; }
+        }
+
+        private IList<Log<T>> ConvertEventsToLogs<T>(List<Event> events) where T : class
+        {
+            var logs = new List<Log<T>>();
+
+            foreach (var property in events)
+            {
+                logs.Add(new Log<T>
+                {
+                    LogDate = Convert.ToDateTime(property.Properties.FirstOrDefault(p => p.Name == nameof(Log.LogDate)).Value),
+                    Level = property.Properties.FirstOrDefault(p => p.Name == nameof(Log.Level)).Value,
+                    Message = (T)Convert.ChangeType(property.MessageTemplateTokens.FirstOrDefault().Text, typeof(T)),
+                    Category = property.Properties.FirstOrDefault(p => p.Name == nameof(Log.Category)).Value,
+                    TraceId = property.Properties.FirstOrDefault(p => p.Name == nameof(Log.TraceId)).Value,
+                    SectionId = property.Properties.FirstOrDefault(p => p.Name == nameof(Log.SectionId)).Value,
+                    ServiceId = property.Properties.FirstOrDefault(p => p.Name == nameof(Log.ServiceId)).Value
+                });
+            }
+
+            return logs;
         }
 
         #endregion Private Methods

@@ -2,18 +2,18 @@
 {
     public interface ILogger<T> where T : class
     {
-        void Info(T message, string traceId, string sectionId, string serviceId, string category = "");
+        Task Info(T message, string traceId, string sectionId, string serviceId, string category = "");
 
-        void Log(string level, T message, string traceId, string sectionId, string serviceId, string category = "");
+        Task Log(string level, T message, string traceId, string sectionId, string serviceId, string category = "");
 
-        void Debug(T message, string traceId, string sectionId, string serviceId, string category = "");
+        Task Debug(T message, string traceId, string sectionId, string serviceId, string category = "");
 
-        void Trace(T message, string traceId, string sectionId, string serviceId, string category = "");
+        Task Trace(T message, string traceId, string sectionId, string serviceId, string category = "");
 
-        void Warning(T message, string traceId, string sectionId, string serviceId, string category = "");
+        Task Warning(T message, string traceId, string sectionId, string serviceId, string category = "");
 
-        void Error(T message, string traceId, string sectionId, string serviceId, string category = "");
+        Task Error(T message, string traceId, string sectionId, string serviceId, string category = "");
 
-        void Fatal(T message, string traceId, string sectionId, string serviceId, string category = "");
+        Task Fatal(T message, string traceId, string sectionId, string serviceId, string category = "");
     }
 }

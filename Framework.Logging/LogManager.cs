@@ -16,172 +16,172 @@ namespace Framework.Logging
 
         #region Read
 
-        public IList<Log<T>> Debug(DateTime date)
+        public async Task<IList<Log<T>>> Debug(DateTime date)
         {
             var logs = new List<Log<T>>();
             foreach (var log in _logStores.Values)
             {
-                logs.AddRange(log.Read<T>(date, "Debug"));
+                logs.AddRange(await log.Read<T>(date, LogLevel.Debug.LevelDescriptor()));
             }
             return logs;
         }
 
-        public IList<Log<T>> Debug(DateTime fromDate, DateTime toDate)
+        public async Task<IList<Log<T>>> Debug(DateTime fromDate, DateTime toDate)
         {
             var logs = new List<Log<T>>();
             foreach (var log in _logStores.Values)
             {
-                logs.AddRange(log.Read<T>(fromDate, toDate,"Debug"));
+                logs.AddRange(await log.Read<T>(fromDate, toDate, LogLevel.Debug.LevelDescriptor()));
             }
             return logs;
         }
 
-        public IList<Log<T>> Read(DateTime date)
+        public async Task<IList<Log<T>>> Read(DateTime date)
         {
             var logs = new List<Log<T>>();
             foreach (var log in _logStores.Values)
             {
-                logs.AddRange(log.Read<T>(date));
+                logs.AddRange(await log.Read<T>(date));
             }
             return logs;
         }
 
-        public IList<Log<T>> Read(DateTime date, LogLevel level)
+        public async Task<IList<Log<T>>> Read(DateTime date, LogLevel level)
         {
             var logs = new List<Log<T>>();
             foreach (var log in _logStores.Values)
             {
-                logs.AddRange(log.Read<T>(date, level.LevelDescriptor()));
+                logs.AddRange(await log.Read<T>(date, level.LevelDescriptor()));
             }
             return logs;
         }
 
-        public IList<Log<T>> Read(string category, DateTime date)
+        public async Task<IList<Log<T>>> Read(string category, DateTime date)
         {
             var logs = new List<Log<T>>();
             foreach (var log in _logStores.Values)
             {
-                logs.AddRange(log.Read<T>(category, date));
+                logs.AddRange(await log.Read<T>(category, date));
             }
             return logs;
         }
 
-        public IList<Log<T>> Read(DateTime fromDate, DateTime toDate)
+        public async Task<IList<Log<T>>> Read(DateTime fromDate, DateTime toDate)
         {
             var logs = new List<Log<T>>();
             foreach (var log in _logStores.Values)
             {
-                logs.AddRange(log.Read<T>(fromDate, toDate));
+                logs.AddRange(await log.Read<T>(fromDate, toDate));
             }
             return logs;
         }
 
-        public IList<Log<T>> Read(DateTime fromDate, DateTime toDate, LogLevel level)
+        public async Task<IList<Log<T>>> Read(DateTime fromDate, DateTime toDate, LogLevel level)
         {
             var logs = new List<Log<T>>();
             foreach (var log in _logStores.Values)
             {
-                logs.AddRange(log.Read<T>(fromDate, toDate, level.LevelDescriptor()));
+                logs.AddRange(await log.Read<T>(fromDate, toDate, level.LevelDescriptor()));
             }
             return logs;
         }
 
-        public IList<Log<T>> Info(DateTime date)
+        public async Task<IList<Log<T>>> Info(DateTime date)
         {
             var logs = new List<Log<T>>();
             foreach (var log in _logStores.Values)
             {
-                logs.AddRange(log.Read<T>(date, "Info"));
+                logs.AddRange(await log.Read<T>(date, LogLevel.Info.LevelDescriptor()));
             }
             return logs;
         }
 
-        public IList<Log<T>> Warning(DateTime date)
+        public async Task<IList<Log<T>>> Warning(DateTime date)
         {
             var logs = new List<Log<T>>();
             foreach (var log in _logStores.Values)
             {
-                logs.AddRange(log.Read<T>(date, "Warning"));
+                logs.AddRange(await log.Read<T>(date, LogLevel.Warning.LevelDescriptor()));
             }
             return logs;
         }
 
-        public IList<Log<T>> Trace(DateTime date)
+        public async Task<IList<Log<T>>> Trace(DateTime date)
         {
             var logs = new List<Log<T>>();
             foreach (var log in _logStores.Values)
             {
-                logs.AddRange(log.Read<T>(date, "Trace"));
+                logs.AddRange(await log.Read<T>(date, LogLevel.Trace.LevelDescriptor()));
             }
             return logs;
         }
 
-        public IList<Log<T>> Error(DateTime date)
+        public async Task<IList<Log<T>>> Error(DateTime date)
         {
             var logs = new List<Log<T>>();
             foreach (var log in _logStores.Values)
             {
-                logs.AddRange(log.Read<T>(date, "Error"));
+                logs.AddRange(await log.Read<T>(date, LogLevel.Error.LevelDescriptor()));
             }
             return logs;
         }
 
-        public IList<Log<T>> Fatal(DateTime date)
+        public async Task<IList<Log<T>>> Fatal(DateTime date)
         {
             var logs = new List<Log<T>>();
             foreach (var log in _logStores.Values)
             {
-                logs.AddRange(log.Read<T>(date, "Fatal"));
+                logs.AddRange(await log.Read<T>(date, LogLevel.Fatal.LevelDescriptor()));
             }
             return logs;
         }
 
-        public IList<Log<T>> Info(DateTime fromDate, DateTime toDate)
+        public async Task<IList<Log<T>>> Info(DateTime fromDate, DateTime toDate)
         {
             var logs = new List<Log<T>>();
             foreach (var log in _logStores.Values)
             {
-                logs.AddRange(log.Read<T>(fromDate, toDate,"Info"));
+                logs.AddRange(await log.Read<T>(fromDate, toDate, LogLevel.Info.LevelDescriptor()));
             }
             return logs;
         }
 
-        public IList<Log<T>> Warning(DateTime fromDate, DateTime toDate)
+        public async Task<IList<Log<T>>> Warning(DateTime fromDate, DateTime toDate)
         {
             var logs = new List<Log<T>>();
             foreach (var log in _logStores.Values)
             {
-                logs.AddRange(log.Read<T>(fromDate, toDate, "Warning"));
+                logs.AddRange(await log.Read<T>(fromDate, toDate, LogLevel.Error.LevelDescriptor()));
             }
             return logs;
         }
 
-        public IList<Log<T>> Trace(DateTime fromDate, DateTime toDate)
+        public async Task<IList<Log<T>>> Trace(DateTime fromDate, DateTime toDate)
         {
             var logs = new List<Log<T>>();
             foreach (var log in _logStores.Values)
             {
-                logs.AddRange(log.Read<T>(fromDate, toDate, "Trace"));
+                logs.AddRange(await log.Read<T>(fromDate, toDate, LogLevel.Trace.LevelDescriptor()));
             }
             return logs;
         }
 
-        public IList<Log<T>> Error(DateTime fromDate, DateTime toDate)
+        public async Task<IList<Log<T>>> Error(DateTime fromDate, DateTime toDate)
         {
             var logs = new List<Log<T>>();
             foreach (var log in _logStores.Values)
             {
-                logs.AddRange(log.Read<T>(fromDate, toDate, "Error"));
+                logs.AddRange(await log.Read<T>(fromDate, toDate, LogLevel.Error.LevelDescriptor()));
             }
             return logs;
         }
 
-        public IList<Log<T>> Fatal(DateTime fromDate, DateTime toDate)
+        public async Task<IList<Log<T>>> Fatal(DateTime fromDate, DateTime toDate)
         {
             var logs = new List<Log<T>>();
             foreach (var log in _logStores.Values)
             {
-                logs.AddRange(log.Read<T>(fromDate, toDate, "Fatal"));
+                logs.AddRange(await log.Read<T>(fromDate, toDate, LogLevel.Fatal.LevelDescriptor()));
             }
             return logs;
         }
@@ -190,7 +190,7 @@ namespace Framework.Logging
 
         #region Write
 
-        public void Log(string level, T message, string traceId, string sectionId, string serviceId, string category = "")
+        public async Task Log(string level, T message, string traceId, string sectionId, string serviceId, string category = "")
         {
             Log<T> log;
 
@@ -204,7 +204,7 @@ namespace Framework.Logging
             {
                 log = new Log<T>
                 {
-                    Level = level,
+                    Level = level.ToUpper(),
                     Message = message,
                     LogDate = logDate,
                     TraceId = traceId,
@@ -216,7 +216,7 @@ namespace Framework.Logging
             {
                 log = new Log<T>(category)
                 {
-                    Level = level,
+                    Level = level.ToUpper(),
                     Message = message,
                     LogDate = logDate,
                     TraceId = traceId,
@@ -227,22 +227,21 @@ namespace Framework.Logging
 
             foreach (var logStore in _logStores)
             {
-                logStore.Value.Write(log);
+                await logStore.Value.Write(log);
             }
         }
 
-        public void Info(T message, string traceId, string sectionId, string serviceId, string category = "") => Log(nameof(LogLevel.Info), message, traceId, sectionId, serviceId, category);
+        public async Task Info(T message, string traceId, string sectionId, string serviceId, string category = "") => await Log(nameof(LogLevel.Info), message, traceId, sectionId, serviceId, category);
 
-        public void Debug(T message, string traceId, string sectionId, string serviceId, string category = "") => Log(nameof(LogLevel.Debug), message, traceId, sectionId, serviceId, category);
+        public async Task Debug(T message, string traceId, string sectionId, string serviceId, string category = "") => await Log(nameof(LogLevel.Debug), message, traceId, sectionId, serviceId, category);
 
-        public void Error(T message, string traceId, string sectionId, string serviceId, string category = "") => Log(nameof(LogLevel.Error), message, traceId, sectionId, serviceId, category);
+        public async Task Error(T message, string traceId, string sectionId, string serviceId, string category = "") => await Log(nameof(LogLevel.Error), message, traceId, sectionId, serviceId, category);
 
-        public void Fatal(T message, string traceId, string sectionId, string serviceId, string category = "") => Log(nameof(LogLevel.Fatal), message, traceId, sectionId, serviceId, category);
+        public async Task Fatal(T message, string traceId, string sectionId, string serviceId, string category = "") => await Log(nameof(LogLevel.Fatal), message, traceId, sectionId, serviceId, category);
 
-        public void Trace(T message, string traceId, string sectionId, string serviceId, string category = "") => Log(nameof(LogLevel.Trace), message, traceId, sectionId, serviceId, category);
+        public async Task Trace(T message, string traceId, string sectionId, string serviceId, string category = "") => await Log(nameof(LogLevel.Trace), message, traceId, sectionId, serviceId, category);
 
-        public void Warning(T message, string traceId, string sectionId, string serviceId, string category = "") => Log(nameof(LogLevel.Warning), message, traceId, sectionId, serviceId, category);
-
+        public async Task Warning(T message, string traceId, string sectionId, string serviceId, string category = "") => await Log(nameof(LogLevel.Warning), message, traceId, sectionId, serviceId, category);
 
         #endregion Write
     }

@@ -44,7 +44,7 @@ namespace Framework.Logging.Files
 
         #region Read
 
-        public IList<Log<T>> Read<T>(DateTime date) where T : class
+        public Task<IList<Log<T>>> Read<T>(DateTime date) where T : class
         {
             var data = string.Empty;
             lock (_lock)
@@ -57,20 +57,20 @@ namespace Framework.Logging.Files
 
             var result = JsonConvert.DeserializeObject<IList<Log<T>>>(data);
 
-            return result;
+            return Task.FromResult(result);
         }
 
-        public IList<Log<T>> Read<T>(string category, DateTime date) where T : class
+        public async Task<IList<Log<T>>> Read<T>(string category, DateTime date) where T : class
         {
-            return Read<T>(date.Date).Where(r => r.Category == category).ToList();
+            return Read<T>(date.Date).Result.Where(r => r.Category == category).ToList();
         }
 
-        public IList<Log<T>> Read<T>(DateTime date, string level) where T : class
+        public async Task<IList<Log<T>>> Read<T>(DateTime date, string level) where T : class
         {
-            return Read<T>(date).Where(c => c.Level == level).ToList();
+            return Read<T>(date).Result.Where(c => c.Level == level).ToList();
         }
 
-        public IList<Log<T>> Read<T>(DateTime fromDate, DateTime toDate) where T : class
+        public Task<IList<Log<T>>> Read<T>(DateTime fromDate, DateTime toDate) where T : class
         {
             var data = string.Empty;
             lock (_lock)
@@ -81,19 +81,19 @@ namespace Framework.Logging.Files
                 data = _openStreams.Read(fromDate.Date, toDate.Date);
             }
             var result = JsonConvert.DeserializeObject<IList<Log<T>>>(data);
-            return result;
+            return Task.FromResult(result);
         }
 
-        public IList<Log<T>> Read<T>(DateTime fromDate, DateTime toDate, string level) where T : class
+        public async Task<IList<Log<T>>> Read<T>(DateTime fromDate, DateTime toDate, string level) where T : class
         {
-            return Read<T>(fromDate, toDate).Where(p => p.Level == level).ToList();
+            return Read<T>(fromDate, toDate).Result.Where(p => p.Level == level).ToList();
         }
 
         #endregion Read
 
         #region Write
 
-        public void Write<T>(ILog<T> log) where T : class
+        public Task Write<T>(ILog<T> log) where T : class
         {
             if (log.Level.IsLevelEnabled(_context.MinimumLevel, _fileConfig.Level))
             {
@@ -110,6 +110,8 @@ namespace Framework.Logging.Files
                     _openStreams.Append(Now, line);
                 }
             }
+
+            return Task.CompletedTask;
         }
 
         #endregion Write
