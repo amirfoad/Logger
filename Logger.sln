@@ -5,19 +5,23 @@ VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Playground", "Playground", "{FAC89286-6F2B-49B9-B830-86BEC8E44B20}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework.Playground.Console", "Framework.Playground.Console\Framework.Playground.Console.csproj", "{0ADACECC-F6A4-4F05-B207-EAE01CD999BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework.Playground.Console", "Framework.Playground.Console\Framework.Playground.Console.csproj", "{0ADACECC-F6A4-4F05-B207-EAE01CD999BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework.Core", "Framework.Core\Framework.Core.csproj", "{4FAE12DE-4564-4BE8-943C-DF6D2251F2F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework.Core", "Framework.Core\Framework.Core.csproj", "{4FAE12DE-4564-4BE8-943C-DF6D2251F2F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework.Logging", "Framework.Logging\Framework.Logging.csproj", "{AE4ED13F-3D2C-4E37-B35F-2037136398F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework.Logging", "Framework.Logging\Framework.Logging.csproj", "{AE4ED13F-3D2C-4E37-B35F-2037136398F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework.Logging.Console", "Framework.Logging.Console\Framework.Logging.Console.csproj", "{AB0A96AD-7115-4466-A6F1-5155DCB4295C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework.Logging.Console", "Framework.Logging.Console\Framework.Logging.Console.csproj", "{AB0A96AD-7115-4466-A6F1-5155DCB4295C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework.Logging.Elastic", "Framework.Logging.Elastic\Framework.Logging.Elastic.csproj", "{7E8E91E9-3582-4564-9560-22E7AC24E7E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework.Logging.Elastic", "Framework.Logging.Elastic\Framework.Logging.Elastic.csproj", "{7E8E91E9-3582-4564-9560-22E7AC24E7E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework.Logging.File", "Framework.Logging.File\Framework.Logging.File.csproj", "{1EA88EAE-E9E3-4D5E-8330-74B9F7EF1E84}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework.Logging.File", "Framework.Logging.File\Framework.Logging.File.csproj", "{1EA88EAE-E9E3-4D5E-8330-74B9F7EF1E84}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework.Logging.Seq", "Framework.Logging.Seq\Framework.Logging.Seq.csproj", "{021FCA8A-01B0-40E7-8DF5-340589886147}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework.Logging.Seq", "Framework.Logging.Seq\Framework.Logging.Seq.csproj", "{021FCA8A-01B0-40E7-8DF5-340589886147}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework.DataAccess.Dapper", "Framework.DataAccess.Dapper\Framework.DataAccess.Dapper.csproj", "{96CA6E33-4784-4D20-B62E-7AE9F3DE1DC8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework.Logging.SqlServer", "Framework.Logging.SqlServer\Framework.Logging.SqlServer.csproj", "{09CB04AC-60B8-4FBA-BBA3-7D0854C21004}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +57,14 @@ Global
 		{021FCA8A-01B0-40E7-8DF5-340589886147}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{021FCA8A-01B0-40E7-8DF5-340589886147}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{021FCA8A-01B0-40E7-8DF5-340589886147}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96CA6E33-4784-4D20-B62E-7AE9F3DE1DC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96CA6E33-4784-4D20-B62E-7AE9F3DE1DC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96CA6E33-4784-4D20-B62E-7AE9F3DE1DC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96CA6E33-4784-4D20-B62E-7AE9F3DE1DC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09CB04AC-60B8-4FBA-BBA3-7D0854C21004}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09CB04AC-60B8-4FBA-BBA3-7D0854C21004}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09CB04AC-60B8-4FBA-BBA3-7D0854C21004}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09CB04AC-60B8-4FBA-BBA3-7D0854C21004}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
