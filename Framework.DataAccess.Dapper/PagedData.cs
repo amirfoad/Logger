@@ -2,7 +2,7 @@
 
 namespace Framework.DataAccess.Dapper
 {
-    public class PagedData<T> : IPagedData<T>
+    public class   PagedData<T> : IPagedData<T>
     {
         public PagedData(int itemsCounts, int pageSize, int currentPage, List<T> data)
         {
