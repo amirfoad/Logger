@@ -1,18 +1,12 @@
 ﻿using Dapper;
 using Dapper.FastCrud;
 using Framework.Core.Extensions;
-using Framework.DataAccess.Dapper.Contracts;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Framework.DataAccess.Dapper
 {

@@ -164,7 +164,7 @@ namespace Framework.Core.Extensions
                     return result.GetColumnName();
             }
 
-            var attributes = pi.GetCustomAttributes(typeof(T), false).AsList();
+            var attributes = pi.GetCustomAttributes(typeof(T), false).AsListt();
             if (attributes.Count != 1) return pi.Name;
 
             var attributeName = (T)attributes[0];
@@ -182,7 +182,7 @@ namespace Framework.Core.Extensions
                     return result.GetTableName();
             }
 
-            var attributes = type.GetCustomAttributes(typeof(T), false).AsList();
+            var attributes = type.GetCustomAttributes(typeof(T), false).AsListt();
             if (attributes.Count != 1) return type.Name;
 
             var attributeName = (T)attributes[0];
@@ -244,7 +244,7 @@ namespace Framework.Core.Extensions
                 : string.Empty;
         }
 
-        public static List<T> AsList<T>(this IEnumerable<T> source) =>
+        public static List<T> AsListt<T>(this IEnumerable<T> source) =>
             source == null || source is List<T> ? (List<T>)source : source.ToList();
     }
 }

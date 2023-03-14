@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Framework.DataAccess.Dapper.Contracts;
 
-namespace Framework.DataAccess.Dapper.Contracts
+namespace Framework.DataAccess.Dapper
 {
     public interface IUnitOfWork
     {

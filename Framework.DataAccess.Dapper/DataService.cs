@@ -1,17 +1,22 @@
-﻿using Dapper;
-using Dapper.FastCrud;
-using Framework.Core.Extensions;
-using Framework.DataAccess.Dapper.Contracts;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
 using System.Data;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+using Framework.DataAccess.Dapper.Contracts;
+using Dapper;
+using Dapper.FastCrud;
+using Framework.Core.Extensions;
 
 namespace Framework.DataAccess.Dapper
 {
-   public class DataService<T> : IDataService<T> where T : class
+    public class DataService<T> : IDataService<T> where T : class
     {
         private readonly IDbConnection _connection;
         private string _tableName;
@@ -87,7 +92,7 @@ namespace Framework.DataAccess.Dapper
                 var notMappedAttribute = propertie.GetCustomAttribute<NotMappedAttribute>();
 
                 if (notMappedAttribute is not null) continue;
-               
+
                 if (columnAttribute != null)
                 {
                     if (columnAttribute.Name != null)
@@ -287,12 +292,10 @@ namespace Framework.DataAccess.Dapper
                 sortType = "Asc";
 
             var itemsCount = _connection.QuerySingle<int>($"SELECT COUNT({orderBy}) FROM {_tableName} WHERE {predicate}", data);
-            var result = _connection.Query<T>($"SELECT  {filterColumns} FROM {_tableName} WHERE {predicate} Order By {orderBy} {sortType} OFFSET {pageIndex} ROWS FETCH NEXT {pageSize} ROWS ONLY", data);
-      
-            var res = result.AsList();
+            var result = _connection.Query<T>($"SELECT  {filterColumns} FROM {_tableName} WHERE {predicate} Order By {orderBy} {sortType} OFFSET {pageIndex} ROWS FETCH NEXT {pageSize} ROWS ONLY", data)
+                .AsList();
 
-
-            var pagedData = new PagedData<T>(itemsCount, pageSize, pageIndex, res);
+            var pagedData = new PagedData<T>(itemsCount, pageSize, pageIndex, result);
             return pagedData;
         }
 
@@ -607,7 +610,7 @@ namespace Framework.DataAccess.Dapper
 
             var properties = GetPropertiesNames(dataType, _rowTableName);
             var columns = string.Empty;
-            var whereColumns = predicate.ToSql();
+            var whereColumns = predicate.ToSQLL();
 
             foreach (var item in properties)
             {
@@ -730,7 +733,6 @@ namespace Framework.DataAccess.Dapper
 
             return finalprops;
         }
-       
 
         private static IEnumerable<string> GetPropertiesDataNames(Type entityType, string tableName)
         {
@@ -1050,7 +1052,7 @@ namespace Framework.DataAccess.Dapper
 
             var itemsCount = await _connection.QuerySingleAsync<int>($"SELECT COUNT({orderBy}) FROM {_tableName} WHERE {predicate}", data);
             var result = await _connection.QueryAsync<T>($"SELECT  {filterColumns} FROM {_tableName} WHERE {predicate} Order By {orderBy} {sortType} OFFSET {pageIndex} ROWS FETCH NEXT {pageSize} ROWS ONLY", data);
-            var  res = result.AsList();
+            var res = result.AsList();
             var pagedData = new PagedData<T>(itemsCount, pageSize, pageIndex, res);
             return pagedData;
         }
@@ -1253,5 +1255,4 @@ namespace Framework.DataAccess.Dapper
 
         #endregion CRUD
     }
-
 }

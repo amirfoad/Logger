@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq.Expressions;
 
 namespace Framework.DataAccess.Dapper.Contracts
 {
@@ -150,8 +145,8 @@ namespace Framework.DataAccess.Dapper.Contracts
         Task<T> LastOrDefaultAsync(string predicate, object data);
 
         T LastOrDefault(string predicate, object data, string filterColumns);
-        Task<T> LastOrDefaultAsync(string predicate, object data, string filterColumns);
-
+        Task<T>  LastOrDefaultAsync(string predicate, object data, string filterColumns);
+            
         T Single(string predicate, object data);
 
         Task<T> SingleAsync(string predicate, object data);

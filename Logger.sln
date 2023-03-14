@@ -19,9 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework.Logging.File", "F
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework.Logging.Seq", "Framework.Logging.Seq\Framework.Logging.Seq.csproj", "{021FCA8A-01B0-40E7-8DF5-340589886147}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework.DataAccess.Dapper", "Framework.DataAccess.Dapper\Framework.DataAccess.Dapper.csproj", "{96CA6E33-4784-4D20-B62E-7AE9F3DE1DC8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework.Logging.SqlServer", "Framework.Logging.SqlServer\Framework.Logging.SqlServer.csproj", "{09CB04AC-60B8-4FBA-BBA3-7D0854C21004}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework.Logging.SqlServer", "Framework.Logging.SqlServer\Framework.Logging.SqlServer.csproj", "{09CB04AC-60B8-4FBA-BBA3-7D0854C21004}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework.DataAccess.Dapper", "Framework.DataAccess.Dapper\Framework.DataAccess.Dapper.csproj", "{91D74A87-A795-4F24-9AAE-18C08C82D63E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,14 +57,14 @@ Global
 		{021FCA8A-01B0-40E7-8DF5-340589886147}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{021FCA8A-01B0-40E7-8DF5-340589886147}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{021FCA8A-01B0-40E7-8DF5-340589886147}.Release|Any CPU.Build.0 = Release|Any CPU
-		{96CA6E33-4784-4D20-B62E-7AE9F3DE1DC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{96CA6E33-4784-4D20-B62E-7AE9F3DE1DC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{96CA6E33-4784-4D20-B62E-7AE9F3DE1DC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{96CA6E33-4784-4D20-B62E-7AE9F3DE1DC8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{09CB04AC-60B8-4FBA-BBA3-7D0854C21004}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{09CB04AC-60B8-4FBA-BBA3-7D0854C21004}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{09CB04AC-60B8-4FBA-BBA3-7D0854C21004}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{09CB04AC-60B8-4FBA-BBA3-7D0854C21004}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91D74A87-A795-4F24-9AAE-18C08C82D63E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91D74A87-A795-4F24-9AAE-18C08C82D63E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91D74A87-A795-4F24-9AAE-18C08C82D63E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91D74A87-A795-4F24-9AAE-18C08C82D63E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

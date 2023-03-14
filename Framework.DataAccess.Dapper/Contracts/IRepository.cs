@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq.Expressions;
 
-namespace Framework.DataAccess.Dapper.Contracts
+namespace Framework.DataAccess.Dapper
 {
     public interface IRepository<T> where T : class, new()
     {
@@ -87,5 +82,4 @@ namespace Framework.DataAccess.Dapper.Contracts
         Task<int> UpdateAsync(T entity);
         Task<int> UpdateAsync(T entity, Expression<Func<T, bool>> predicate);
     }
-
 }
